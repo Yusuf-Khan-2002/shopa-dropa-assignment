@@ -14,6 +14,21 @@ router.get("/", (req, res) => {
   res.status(200).json({ data: books });
 });
 
+/* GET book image */
+router.get("/:id/image", (req, res) => {
+  const { id } = req.params;
+
+  //Check if book doesn't exists [404]
+  const index = books.findIndex((book) => book._id === id);
+  if (index === -1) {
+    res.status(404).json({ message: "Book does not exist" });
+    return;
+  }
+
+  res.setHeader("Content-Type", books[index].image.mimetype);
+  res.sendFile(books[index].image.path, { root: "." });
+});
+
 /* POST create a book. */
 router.post("/", upload.single("image"), (req, res) => {
   const { title, author, year, isbn } = req.body;
