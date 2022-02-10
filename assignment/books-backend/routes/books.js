@@ -57,12 +57,13 @@ router.delete("/:id", (req, res) => {
 });
 
 /* PATCH update a book */
-router.patch("/:id", (req, res) => {
+router.patch("/:id", upload.single("image"), (req, res) => {
   const { id } = req.params;
   const { title, author, year, isbn } = req.body;
+  const image = req.file;
 
   //Check for invalid body [400]
-  if (!title && !author && !year && !isbn) {
+  if (!title && !author && !year && !isbn && !image) {
     res.status(400).json({ message: "Invalid body" });
     return;
   }
@@ -72,6 +73,16 @@ router.patch("/:id", (req, res) => {
   if (index === -1) {
     res.status(404).json({ message: "Book does not exist" });
     return;
+  }
+
+  //Replace old image if there is a new one
+  if (image) {
+    fs.unlink(books[index].image.path, (err) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+    books[index]["image"] = image;
   }
 
   //Update book at the index if the parameter exists
