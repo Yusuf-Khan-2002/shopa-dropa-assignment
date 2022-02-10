@@ -39,9 +39,9 @@ router.delete("/:id", (req, res) => {
 
   //Check if book doesn't exists [404]
   const index = books.findIndex((book) => book._id === id);
-
   if (index === -1) {
     res.status(404).json({ message: "Book does not exist" });
+    return;
   }
 
   //Delete old image
@@ -62,22 +62,30 @@ router.patch("/:id", (req, res) => {
   const { title, author, year, isbn } = req.body;
 
   //Check for invalid body [400]
-  if (!title || !author || !year || !isbn) {
+  if (!title && !author && !year && !isbn) {
     res.status(400).json({ message: "Invalid body" });
     return;
   }
 
   //Check if book doesn't exists [404]
   const index = books.findIndex((book) => book._id === id);
-
   if (index === -1) {
     res.status(404).json({ message: "Book does not exist" });
+    return;
   }
 
-  //Update book at the index
-  books[index] = { ...books[index], title, author, year, isbn };
+  //Update book at the index if the parameter exists
+  books[index]["title"] = title ? title : books[index]["title"];
+  books[index]["author"] = author ? author : books[index]["author"];
+  books[index]["year"] = year ? year : books[index]["year"];
+  books[index]["isbn"] = isbn ? isbn : books[index]["isbn"];
 
   res.status(200).json({ data: books[index] });
+});
+
+/**Handle invalid route*/
+router.use("/", (req, res) => {
+  res.status(404).json({ message: "Route does not exist" });
 });
 
 module.exports = router;
