@@ -32,4 +32,18 @@ router.post("/", upload.single("image"), (req, res) => {
   res.status(200).json({ data: book });
 });
 
+/* DELETE a book */
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+  const index = books.findIndex((book) => book._id === id);
+
+  if (index === -1) {
+    res.status(404).json({ message: "Book does not exist" });
+  }
+
+  books = books.filter((book) => book._id !== id);
+
+  res.status(200).json({ message: `Book with the id ${id} has been deleted successfully` });
+});
+
 module.exports = router;
