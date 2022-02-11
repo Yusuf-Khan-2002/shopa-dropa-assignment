@@ -1,11 +1,10 @@
 import "./App.css";
-import BookCard from "./components/BookCard/BookCard";
 import "bootstrap/dist/css/bootstrap.min.css";
+import BookCards from "./components/BookCards/BookCards";
 
 function App() {
   return (
     <div className="App">
-      
     </div>
   );
 }
