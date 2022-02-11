@@ -1,4 +1,6 @@
-import './App.css';
+import "./App.css";
+import BookCard from "./components/BookCard/BookCard";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (

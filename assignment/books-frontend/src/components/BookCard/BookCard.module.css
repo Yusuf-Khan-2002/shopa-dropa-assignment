@@ -1,0 +1,41 @@
+.card {
+  display: flex;
+  align-items: center;
+  padding: 1%;
+  border: 2px solid rgba(0, 0, 0, 0.05);
+}
+
+.image {
+  width: 7em;
+  height: 10em;
+}
+
+.title {
+  font-size: x-large;
+  font-weight: 450;
+}
+
+.isbn {
+    font-size: small;
+}
+
+.info {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  text-align: left;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+
+  padding: 2%;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: 3%;
+}
+
+.button{
+    margin: 4%;
+}
