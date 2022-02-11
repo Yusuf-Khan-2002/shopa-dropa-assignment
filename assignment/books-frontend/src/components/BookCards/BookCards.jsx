@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { getBooks } from "../../api/api";
 import BookCard from "../BookCard/BookCard";
@@ -13,7 +12,7 @@ const BookCards = () => {
     };
 
     fetchData();
-  });
+  }, []);
   return (
     <div>
       {books.map((book) => {

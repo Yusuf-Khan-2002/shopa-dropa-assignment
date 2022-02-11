@@ -3,8 +3,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import styles from "./BookNavbar.module.css";
-
-
+import { Link } from "react-router-dom";
 
 const BookNavbar = () => {
   return (
@@ -12,8 +11,12 @@ const BookNavbar = () => {
       <Container className={styles.navContainer}>
         <Navbar.Brand href="">BookDB</Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link href="">Home</Nav.Link>
-          <Nav.Link href="">New Book</Nav.Link>
+          <Nav.Link as={Link} to="/books">
+            Browse Books
+          </Nav.Link>
+          <Nav.Link as={Link} to="/books/new">
+            New Book
+          </Nav.Link>
         </Nav>
       </Container>
     </Navbar>
