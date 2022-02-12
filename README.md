@@ -1,5 +1,5 @@
 
-# BooksDB - ShopaDropa Assignment
+# BookDB - ShopaDropa Assignment
 ![alt text](https://github.com/Yusuf-Khan-2002/shopa-dropa-assignment/blob/main/media/home.png?raw=true)
 
 ![alt text](https://github.com/Yusuf-Khan-2002/shopa-dropa-assignment/blob/main/media/form.png?raw=true)
