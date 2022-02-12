@@ -7,6 +7,7 @@ import Button from "react-bootstrap/esm/Button";
 import { Formik } from "formik";
 import * as yup from "yup";
 import defaultImage from "./gray.png";
+import { useNavigate } from "react-router-dom";
 
 const BookForm = ({ title, author, year, isbn, imageUrl, imageRequired = true, onSubmit }) => {
   const schema = yup.object().shape({
@@ -33,12 +34,19 @@ const BookForm = ({ title, author, year, isbn, imageUrl, imageRequired = true, o
       : yup.mixed().label("Cover Image"),
   });
 
+  const navigate = useNavigate();
+
   const getDefaultImage = () => {
     if (imageUrl) {
       return imageUrl;
     }
 
     return defaultImage;
+  };
+
+  const handleCancel = () => {
+    //Go back to main page
+    navigate("/books");
   };
 
   return (
@@ -141,10 +149,9 @@ const BookForm = ({ title, author, year, isbn, imageUrl, imageRequired = true, o
               </Form.Group>
             </Row>
             <Row className={styles.buttonContainer}>
-              <Button className={styles.button} variant="secondary">
+              <Button className={styles.button} variant="secondary" onClick={handleCancel}>
                 Cancel
               </Button>
-
               <Button
                 className={styles.button}
                 disabled={isSubmitting}

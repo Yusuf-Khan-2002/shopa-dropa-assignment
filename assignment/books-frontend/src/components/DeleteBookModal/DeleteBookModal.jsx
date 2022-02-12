@@ -6,7 +6,7 @@ import Modal from "react-bootstrap/Modal";
 import { deleteBookById, parseError } from "../../api/api";
 import { useAlert } from "react-alert";
 
-const DeleteBookModal = ({ id, afterDelete }) => {
+const DeleteBookModal = ({ id, afterDelete, book }) => {
   const [visible, setVisible] = useState(false);
 
   //Hook that shows an alert
@@ -37,10 +37,12 @@ const DeleteBookModal = ({ id, afterDelete }) => {
       </Button>
 
       <Modal show={visible} onHide={handleHide}>
-        <Modal.Header closeButton>
-          <Modal.Title>Are you sure you want to proceed?</Modal.Title>
+        <Modal.Header>
+          <Modal.Title>Are you sure you want to delete this book?</Modal.Title>
         </Modal.Header>
-        <Modal.Body>This action cannot be reversed.</Modal.Body>
+        <Modal.Body>
+          Deleting <strong>{book}</strong> cannot be reversed
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleHide}>
             Cancel

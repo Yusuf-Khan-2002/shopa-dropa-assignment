@@ -17,7 +17,7 @@ const BookCard = ({ image, title, author, year, isbn, id, afterDelete }) => {
         <Button className={styles.button} variant="dark" as={Link} to={`/books/${id}`}>
           Edit
         </Button>
-        <DeleteBookModal id={id} afterDelete={afterDelete} />
+        <DeleteBookModal id={id} book={`${title} (${year})`} afterDelete={afterDelete} />
       </div>
     </div>
   );
