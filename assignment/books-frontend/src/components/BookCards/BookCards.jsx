@@ -24,7 +24,7 @@ const BookCards = () => {
             year={year}
             author={author}
             isbn={isbn}
-            image={`${process.env.REACT_APP_API_URL}/books/${id}/image`}
+            image={`${process.env.REACT_APP_API_URL}/books/${id}/image?${Date.now()}`}
             id={id}
           />
         );

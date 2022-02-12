@@ -14,6 +14,20 @@ router.get("/", (req, res) => {
   res.status(200).json({ data: books });
 });
 
+/* GET books by id */
+router.get("/:id", (req, res) => {
+  const { id } = req.params;
+
+  //Check if book doesn't exists [404]
+  const index = books.findIndex((book) => book._id === id);
+  if (index === -1) {
+    res.status(404).json({ message: "Book does not exist" });
+    return;
+  }
+
+  res.status(200).json({ data: books[index] });
+});
+
 /* GET book image */
 router.get("/:id/image", (req, res) => {
   const { id } = req.params;
@@ -60,11 +74,7 @@ router.delete("/:id", (req, res) => {
   }
 
   //Delete old image
-  fs.unlink(books[index].image.path, (err) => {
-    if (err) {
-      console.log(err);
-    }
-  });
+  fs.unlinkSync(books[index].image.path);
 
   books = books.filter((book) => book._id !== id);
 
@@ -92,11 +102,7 @@ router.patch("/:id", upload.single("image"), (req, res) => {
 
   //Replace old image if there is a new one
   if (image) {
-    fs.unlink(books[index].image.path, (err) => {
-      if (err) {
-        console.log(err);
-      }
-    });
+    fs.unlinkSync(books[index].image.path);
     books[index]["image"] = image;
   }
 

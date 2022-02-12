@@ -50,7 +50,7 @@ const BookForm = ({ title, author, year, isbn, imageUrl, imageRequired = true, o
       initialValues={{
         title: title ? title : "",
         author: author ? author : "",
-        year: year ? year : "",
+        year: year ? parseInt(year) : "",
         isbn: isbn ? isbn : "",
         image: null,
       }}
