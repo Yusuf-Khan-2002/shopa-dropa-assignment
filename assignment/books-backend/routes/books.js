@@ -43,7 +43,7 @@ router.post("/", upload.single("image"), (req, res) => {
   //Add book to array
   const id = uuidv4();
   const book = { _id: id, title, author, year, isbn, image };
-  books.push(book);
+  books.unshift(book);
 
   res.status(200).json({ data: book });
 });

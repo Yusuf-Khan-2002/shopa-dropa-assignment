@@ -1,8 +1,8 @@
 import React from "react";
-import BookForm from "../../components/BookForm/BookForm";
+import NewBookForm from "../../components/NewBookForm/NewBookForm";
 
 const NewBookPage = () => {
-  return <BookForm/>;
+  return <NewBookForm />;
 };
 
 export default NewBookPage;

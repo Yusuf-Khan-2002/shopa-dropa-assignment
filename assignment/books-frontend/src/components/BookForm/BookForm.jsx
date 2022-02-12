@@ -6,15 +6,16 @@ import styles from "./BookForm.module.css";
 import Button from "react-bootstrap/esm/Button";
 import { Formik } from "formik";
 import * as yup from "yup";
+import defaultImage from "./gray.png";
 
-const BookForm = () => {
+const BookForm = ({ title, author, year, isbn, imageUrl, imageRequired = true, onSubmit }) => {
   const schema = yup.object().shape({
     title: yup.string().label("Title").required(),
     author: yup.string().label("Author").required(),
     year: yup
       .number()
       .min(0)
-      .max(new Date().getFullYear() + 1)
+      .max(new Date().getFullYear() + 10)
       .label("Year")
       .required(),
     isbn: yup
@@ -27,28 +28,47 @@ const BookForm = () => {
       )
       .test("Only digits", "Invalid ISBN number", (isbn) => /^\d+$/.test(isbn))
       .required(),
-    image: yup.mixed().label("Cover Image").required(),
+    image: imageRequired
+      ? yup.mixed().label("Cover Image").required()
+      : yup.mixed().label("Cover Image"),
   });
+
+  const getDefaultImage = () => {
+    if (imageUrl) {
+      return imageUrl;
+    }
+
+    return defaultImage;
+  };
 
   return (
     <Formik
       onSubmit={(values) => {
-        console.log(values);
+        onSubmit(values);
       }}
       validationSchema={schema}
       initialValues={{
-        title: "",
-        author: "",
-        year: "",
-        isbn: "",
+        title: title ? title : "",
+        author: author ? author : "",
+        year: year ? year : "",
+        isbn: isbn ? isbn : "",
         image: null,
       }}
     >
-      {({ handleSubmit, handleChange, values, touched, errors, isSubmitting, setFieldValue }) => (
+      {({
+        handleSubmit,
+        handleChange,
+        handleBlur,
+        values,
+        touched,
+        errors,
+        isSubmitting,
+        setFieldValue,
+      }) => (
         <div className={styles.formContainer}>
           <img
             className={styles.image}
-            src={"https://starwarsblog.starwars.com/wp-content/uploads/2021/10/bobf-key-art-2.jpg"}
+            src={values.image ? URL.createObjectURL(values.image) : getDefaultImage()}
           />
           <Form className={styles.form} onSubmit={handleSubmit}>
             <Row className={styles.row}>
@@ -61,6 +81,7 @@ const BookForm = () => {
                   onChange={handleChange}
                   isInvalid={touched.title && errors.title}
                   isValid={touched.title && !errors.title}
+                  onBlur={handleBlur}
                 />
                 <Form.Control.Feedback type="invalid">{errors.title}</Form.Control.Feedback>
               </Form.Group>
