@@ -24,7 +24,7 @@ const EditBookForm = ({ id }) => {
     };
 
     fetchData();
-  }, []);
+  }, [alert, id]);
 
   const handleSubmit = async (values) => {
     const { title, author, year, isbn, image } = values;

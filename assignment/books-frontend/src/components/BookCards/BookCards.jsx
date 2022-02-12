@@ -4,13 +4,12 @@ import BookCard from "../BookCard/BookCard";
 import styles from "./BookCards.module.css";
 import { useAlert } from "react-alert";
 
-
 const BookCards = () => {
   //Hook that shows an alert
   const alert = useAlert();
   const [books, setBooks] = useState([]);
 
-  const fetchData = async () => {
+  const afterDelete = async () => {
     try {
       const fetchedBooks = await getBooks();
       setBooks(fetchedBooks.data.data);
@@ -20,8 +19,16 @@ const BookCards = () => {
   };
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const fetchedBooks = await getBooks();
+        setBooks(fetchedBooks.data.data);
+      } catch (err) {
+        alert.error(parseError(err));
+      }
+    };
     fetchData();
-  }, []);
+  }, [alert]);
   return (
     <div>
       {books && books.length !== 0 ? (
@@ -36,7 +43,7 @@ const BookCards = () => {
               isbn={isbn}
               image={`${process.env.REACT_APP_API_URL}/books/${id}/image?${Date.now()}`}
               id={id}
-              afterDelete={fetchData}
+              afterDelete={afterDelete}
             />
           );
         })

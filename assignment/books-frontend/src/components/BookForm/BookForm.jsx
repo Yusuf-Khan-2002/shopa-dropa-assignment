@@ -77,7 +77,7 @@ const BookForm = ({ title, author, year, isbn, imageUrl, imageRequired = true, o
           <img
             className={styles.image}
             src={values.image ? URL.createObjectURL(values.image) : getDefaultImage()}
-            alt="Upload image preview"
+            alt="Upload cover preview"
           />
           <Form className={styles.form} onSubmit={handleSubmit}>
             <Row className={styles.row}>
