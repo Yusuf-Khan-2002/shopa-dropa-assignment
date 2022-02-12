@@ -5,12 +5,12 @@ import BookCard from "../BookCard/BookCard";
 const BookCards = () => {
   const [books, setBooks] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const fetchedBooks = await getBooks();
-      setBooks(fetchedBooks.data.data);
-    };
+  const fetchData = async () => {
+    const fetchedBooks = await getBooks();
+    setBooks(fetchedBooks.data.data);
+  };
 
+  useEffect(() => {
     fetchData();
   }, []);
   return (
@@ -26,6 +26,7 @@ const BookCards = () => {
             isbn={isbn}
             image={`${process.env.REACT_APP_API_URL}/books/${id}/image?${Date.now()}`}
             id={id}
+            afterDelete={fetchData}
           />
         );
       })}

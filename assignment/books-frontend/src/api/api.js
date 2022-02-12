@@ -33,3 +33,8 @@ export const updateBook = async (title, author, year, isbn, image, id) => {
   }
   await axios.patch(`/books/${id}`, data);
 };
+
+/**Delete a book */
+export const deleteBookById = async (id) => {
+  await axios.delete(`/books/${id}`);
+};

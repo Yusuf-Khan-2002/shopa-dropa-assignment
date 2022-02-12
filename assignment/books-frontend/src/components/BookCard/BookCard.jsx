@@ -2,8 +2,9 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import styles from "./BookCard.module.css";
 import { Link } from "react-router-dom";
+import DeleteBookModal from "../DeleteBookModal/DeleteBookModal";
 
-const BookCard = ({ image, title, author, year, isbn, id }) => {
+const BookCard = ({ image, title, author, year, isbn, id, afterDelete }) => {
   return (
     <div className={styles.card}>
       <img className={styles.image} src={image} />
@@ -16,9 +17,7 @@ const BookCard = ({ image, title, author, year, isbn, id }) => {
         <Button className={styles.button} variant="dark" as={Link} to={`/books/${id}`}>
           Edit
         </Button>
-        <Button className={styles.button} variant="secondary">
-          Delete
-        </Button>
+        <DeleteBookModal id={id} afterDelete={afterDelete}/>
       </div>
     </div>
   );
