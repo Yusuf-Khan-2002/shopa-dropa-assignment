@@ -1,0 +1,30 @@
+.formContainer{
+  margin: 2%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form{
+  width: 80%;
+}
+
+.row {
+  margin: 2%;
+  text-align: left;
+}
+
+.image {
+  width: 14em;
+  height: 20em;
+}
+
+.buttonContainer{
+  display: flex;
+  justify-content: center;
+}
+.button {
+  width: 10%;
+  margin: 1%;
+}
