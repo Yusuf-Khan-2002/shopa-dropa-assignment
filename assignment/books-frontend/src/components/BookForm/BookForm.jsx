@@ -144,6 +144,7 @@ const BookForm = ({ title, author, year, isbn, imageUrl, imageRequired = true, o
                   }}
                   isInvalid={touched.isbn && errors.image}
                   isValid={touched.image && !errors.image}
+                  accept="image/png, image/jpeg"
                 />
                 <Form.Control.Feedback type="invalid">{errors.image}</Form.Control.Feedback>
               </Form.Group>
