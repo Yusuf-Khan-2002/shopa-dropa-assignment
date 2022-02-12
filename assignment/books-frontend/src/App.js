@@ -7,6 +7,7 @@ import NewBookPage from "./pages/NewBookPage/NewBookPage";
 import EditBookPage from "./pages/EditBookPage/EditBookPage";
 import { Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/books" element={<ListingPage />} />
             <Route path="/books/new" element={<NewBookPage />} />
             <Route path="/books/:id" element={<EditBookPage />} />
+            <Route path="*" element={<NotFoundPage/>}/>
           </Routes>
         </AlertProvider>
       </HashRouter>
