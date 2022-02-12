@@ -2,19 +2,22 @@ import axios from "axios";
 import React from "react";
 import BookForm from "../BookForm/BookForm";
 import { useNavigate } from "react-router-dom";
-import { createBook } from "../../api/api";
+import { createBook, parseError } from "../../api/api";
+import { useAlert } from "react-alert";
 
 const NewBookForm = () => {
   const navigate = useNavigate();
+  //Hook that shows an alert
+  const alert = useAlert();
 
   const handleSubmit = async (values) => {
     const { title, author, year, isbn, image } = values;
     try {
       await createBook(title, author, year, isbn, image);
-      navigate("/books");
     } catch (err) {
-      console.log(err);
+      alert.error(parseError(err));
     }
+    navigate("/books");
   };
 
   return (

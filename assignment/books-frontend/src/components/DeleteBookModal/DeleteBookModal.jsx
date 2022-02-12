@@ -3,10 +3,14 @@ import { useState } from "react";
 import styles from "./DeleteBookModal.module.css";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { deleteBookById } from "../../api/api";
+import { deleteBookById, parseError } from "../../api/api";
+import { useAlert } from "react-alert";
 
 const DeleteBookModal = ({ id, afterDelete }) => {
   const [visible, setVisible] = useState(false);
+
+  //Hook that shows an alert
+  const alert = useAlert();
 
   const handleHide = () => {
     setVisible(false);
@@ -20,7 +24,7 @@ const DeleteBookModal = ({ id, afterDelete }) => {
       await deleteBookById(id);
       afterDelete();
     } catch (err) {
-      console.log(err);
+      alert.error(parseError(err));
     }
 
     handleHide();

@@ -1,5 +1,15 @@
 import axios from "axios";
 
+/**Parse api error messages */
+export const parseError = (err) => {
+  try {
+    const message = err.response.data.message;
+    return message;
+  } catch (e) {
+    return err.toString();
+  }
+};
+
 /**Get all books */
 export const getBooks = async () => {
   return await axios.get("/books");

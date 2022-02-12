@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { getBooks } from "../../api/api";
+import { getBooks, parseError } from "../../api/api";
 import BookCard from "../BookCard/BookCard";
 import styles from "./BookCards.module.css";
+import { useAlert } from "react-alert";
 
 
 const BookCards = () => {
+  //Hook that shows an alert
+  const alert = useAlert();
   const [books, setBooks] = useState([]);
 
   const fetchData = async () => {
-    const fetchedBooks = await getBooks();
-    setBooks(fetchedBooks.data.data);
+    try {
+      const fetchedBooks = await getBooks();
+      setBooks(fetchedBooks.data.data);
+    } catch (err) {
+      alert.error(parseError(err));
+    }
   };
 
   useEffect(() => {

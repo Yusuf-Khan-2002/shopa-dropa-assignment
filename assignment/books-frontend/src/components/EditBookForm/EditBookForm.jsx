@@ -1,13 +1,17 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { getBookById, updateBook } from "../../api/api";
+import { getBookById, parseError, updateBook } from "../../api/api";
 import BookForm from "../BookForm/BookForm";
 import { useNavigate } from "react-router-dom";
+import { useAlert } from "react-alert";
 
 const EditBookForm = ({ id }) => {
   const [book, setBook] = useState(null);
   const navigate = useNavigate();
+
+  //Hook that shows an alert
+  const alert = useAlert();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -15,7 +19,7 @@ const EditBookForm = ({ id }) => {
         const fetchedBook = await getBookById(id);
         setBook(fetchedBook.data.data);
       } catch (err) {
-        console.log(err);
+        alert.error(parseError(err));
       }
     };
 
@@ -26,10 +30,10 @@ const EditBookForm = ({ id }) => {
     const { title, author, year, isbn, image } = values;
     try {
       await updateBook(title, author, year, isbn, image, id);
-      navigate("/books");
     } catch (err) {
-      console.log(err);
+      alert.error(parseError(err));
     }
+    navigate("/books");
   };
 
   return (
