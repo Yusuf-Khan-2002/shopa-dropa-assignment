@@ -23,7 +23,7 @@ const BookForm = () => {
       .test(
         "length",
         "Must be 13 (ISBN-13) or 10 (ISBN-10) digits long",
-        (isbn) => isbn.length === 10 || isbn.length === 13
+        (isbn) => isbn && (isbn.length === 10 || isbn.length === 13)
       )
       .test("Only digits", "Invalid ISBN number", (isbn) => /^\d+$/.test(isbn))
       .required(),
