@@ -7,7 +7,7 @@ import DeleteBookModal from "../DeleteBookModal/DeleteBookModal";
 const BookCard = ({ image, title, author, year, isbn, id, afterDelete }) => {
   return (
     <div className={styles.card}>
-      <img className={styles.image} src={image} />
+      <img className={styles.image} src={image} alt="" />
       <div className={styles.info}>
         <p className={styles.title}>{`${title} (${year})`}</p>
         <p>{author}</p>
@@ -17,7 +17,7 @@ const BookCard = ({ image, title, author, year, isbn, id, afterDelete }) => {
         <Button className={styles.button} variant="dark" as={Link} to={`/books/${id}`}>
           Edit
         </Button>
-        <DeleteBookModal id={id} afterDelete={afterDelete}/>
+        <DeleteBookModal id={id} afterDelete={afterDelete} />
       </div>
     </div>
   );
