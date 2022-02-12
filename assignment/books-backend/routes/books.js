@@ -7,12 +7,49 @@ const fs = require("fs");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 
-let books = [];
+/**Test Books */
+let books = [
+  {
+    _id: "5080ac18-ca8a-408a-b5b7-43260511366a",
+    title: "The Mandalorian Season 2 Junior Novel",
+    author: "Joe Schreiber",
+    year: "2022",
+    isbn: "9781368075961",
+    image: {
+      fieldname: "image",
+      originalname: "51bhHQ4XR3L.jpg",
+      encoding: "7bit",
+      mimetype: "image/jpeg",
+      destination: "test_uploads/",
+      filename: "test1",
+      path: "test_uploads\\test1",
+      size: 33123,
+    },
+  },
+  {
+    _id: "5e4ac93d-f933-4806-a1e4-e600dcd77db8",
+    title: "Star Wars: The Mandalorian Junior Novel",
+    author: "Joe Schreiber",
+    year: "2021",
+    isbn: "9781368057134",
+    image: {
+      fieldname: "image",
+      originalname: "51Y0ou0g39L.jpg",
+      encoding: "7bit",
+      mimetype: "image/jpeg",
+      destination: "test_uploads/",
+      filename: "test2",
+      path: "test_uploads\\test2",
+      size: 34485,
+    },
+  },
+];
 
 /* GET books listing. */
 router.get("/", (req, res) => {
   res.status(200).json({ data: books });
 });
+
 
 /* GET books by id */
 router.get("/:id", (req, res) => {
@@ -28,6 +65,7 @@ router.get("/:id", (req, res) => {
   res.status(200).json({ data: books[index] });
 });
 
+
 /* GET book image */
 router.get("/:id/image", (req, res) => {
   const { id } = req.params;
@@ -42,6 +80,7 @@ router.get("/:id/image", (req, res) => {
   res.setHeader("Content-Type", books[index].image.mimetype);
   res.sendFile(books[index].image.path, { root: "." });
 });
+
 
 /* POST create a book. */
 router.post("/", upload.single("image"), (req, res) => {
@@ -62,6 +101,7 @@ router.post("/", upload.single("image"), (req, res) => {
   res.status(200).json({ data: book });
 });
 
+
 /* DELETE a book */
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
@@ -73,13 +113,16 @@ router.delete("/:id", (req, res) => {
     return;
   }
 
-  //Delete old image
-  fs.unlinkSync(books[index].image.path);
+  //Delete old image only if its not a test image
+  if (books[index].image.destination !== "test_uploads/") {
+    fs.unlinkSync(books[index].image.path);
+  }
 
   books = books.filter((book) => book._id !== id);
 
   res.status(200).json({ message: `Book with the id ${id} has been deleted successfully` });
 });
+
 
 /* PATCH update a book */
 router.patch("/:id", upload.single("image"), (req, res) => {
@@ -102,7 +145,10 @@ router.patch("/:id", upload.single("image"), (req, res) => {
 
   //Replace old image if there is a new one
   if (image) {
-    fs.unlinkSync(books[index].image.path);
+    //Only delete if its not a test image
+    if (books[index].image.destination !== "test_uploads/") {
+      fs.unlinkSync(books[index].image.path);
+    }
     books[index]["image"] = image;
   }
 
@@ -114,6 +160,7 @@ router.patch("/:id", upload.single("image"), (req, res) => {
 
   res.status(200).json({ data: books[index] });
 });
+
 
 /**Handle invalid route*/
 router.use("/", (req, res) => {
